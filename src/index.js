@@ -4,15 +4,15 @@ const TICKET_URL = 'https://evening-plateau-54365.herokuapp.com/tickets/';
 
 const movieContainer = document.getElementsByClassName('ui cards showings')[0];
 
-function fetchShows(movieContainer) {
+const getShows = function fetchShowsFromJSON(movieContainer) {
     fetch(MOVIE_URL)
     .then(resp => resp.json())
     .then(function(theatre) {
-        movieContainer.innerHTML = theatre.showings.map(movie => createNewMovie(movie))
+        movieContainer.innerHTML = theatre.showings.map(movie => newMovie(movie))
     });
 }
 
-function createNewMovie(movie) {
+const newMovie = function createNewMovieCard(movie) {
     return `
     <div class='card'>
         <div class="content">
@@ -33,10 +33,10 @@ function checkSoldOut(movie) {
 }
 
 movieContainer.addEventListener('click', function(e) {
-    if (e.target.className === 'ui blue button') buyTicket(e);
+    if (e.target.className === 'ui blue button') buy(e);
 })
 
-function buyTicket(e) {
+const buy = function buyTicket(e) {
     let showing_id = +e.target.id;
     let tixsDescription = e.target.offsetParent.getElementsByClassName('description')[0]
     let tixsLeft = +tixsDescription.innerText.split(' ')[0]
@@ -57,4 +57,4 @@ function buyTicket(e) {
     })
 }
 
-fetchShows(movieContainer);
+getShows(movieContainer);
