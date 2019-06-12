@@ -4,13 +4,17 @@ const TICKET_URL = 'https://evening-plateau-54365.herokuapp.com/tickets'
 
 //DOM ELEMS
 const showings = document.querySelector('.showings')
+const buyBtn = document.querySelector('.button')
 
 //EVENT LISTENERS
 showings.addEventListener('click', (e) => {
     if (e.target.className === 'ui blue button') {
-        let remaining = parseInt( e.target.parentElement.previousElementSibling.children[2].innerText)
-        --remaining
-        e.target.parentElement.previousElementSibling.children[2].innerText = `${remaining} remaining tickets`
+        //why can't i set e.target etc to variable?
+        //let remainingTkts = e.target.parentElement.previousElementSibling.children[2].innerText
+        let numTkts = parseInt( e.target.parentElement.previousElementSibling.children[2].innerText)
+        --numTkts
+        // debugger
+        e.target.parentElement.previousElementSibling.children[2].innerText = `${numTkts > 0 ? numTkts : numTkts = 0} remaining tickets`
         // debugger
         fetch(TICKET_URL, {
             method: 'POST',
@@ -23,7 +27,17 @@ showings.addEventListener('click', (e) => {
             })
         })
         .then(res => res.json())
-        .then(console.log)
+        .then(ticket => {
+            let showingId = ticket.showing_id
+            if(numTkts === 0){
+                console.log('disable this button')
+                //find the show card with matching showing.id === showingId
+                let thisCard = document.findElementByAttribut('data-id', showingId)
+                //change the className of buyBtn to 'ui disabled button'
+                debugger
+                //change inner text to Sold Out
+            }
+        })
     }
 })
 
@@ -31,9 +45,11 @@ showings.addEventListener('click', (e) => {
 function ticketHtml(showing) {
     let purchaseStatus;
     let remaining = showing.capacity - showing.tickets_sold
-    if (remaining>0) {
+    if (remaining > 0) {
         purchaseStatus = 'Buy Ticket';
     } else {
+        // debugger
+        // buyBtn.className = "ui disabled button"
         purchaseStatus = 'Sold Out'
     }
     let ticketCard = document.createElement('div');
@@ -59,6 +75,10 @@ function ticketHtml(showing) {
     `
     return ticketCard
 }
+
+// refactor diable button render here
+// function disableButton() {
+// }
 
 //INIT
 function init(){
