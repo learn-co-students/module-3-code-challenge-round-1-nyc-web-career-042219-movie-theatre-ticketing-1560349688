@@ -1,0 +1,24 @@
+{
+  "name": "module-3-code-challenge-round-1-nyc-web-career-042219-movie-theatre-ticketing-1560349688",
+  "version": "1.0.0",
+  "description": "![Example](assets/code-challenge-3.gif)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/learn-co-students/module-3-code-challenge-round-1-nyc-web-career-042219-movie-theatre-ticketing-1560349688.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/learn-co-students/module-3-code-challenge-round-1-nyc-web-career-042219-movie-theatre-ticketing-1560349688/issues"
+  },
+  "homepage": "https://github.com/learn-co-students/module-3-code-challenge-round-1-nyc-web-career-042219-movie-theatre-ticketing-1560349688#readme",
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.17.3"
+  }
+}

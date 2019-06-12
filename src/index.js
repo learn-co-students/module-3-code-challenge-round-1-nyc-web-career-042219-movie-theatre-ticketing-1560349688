@@ -1,1 +1,2 @@
-const theatreId = null;
+const theatreId = 643;
+Controller.init();
