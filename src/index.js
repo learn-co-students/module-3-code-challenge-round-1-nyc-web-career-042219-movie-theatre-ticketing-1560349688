@@ -63,6 +63,23 @@ window.addEventListener('DOMContentLoaded', (event) => {
       });
     }
     fetchShowings()
+    // post
+    function postTicket(showingId){
+      return fetch(theaterURL, { method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({showing_id: showingId})
+      })
+      .then(res => res.json())
+      //determing what to do with res here 
+    }
+    //Required Headers
+    // {
+    //   'Content-Type': 'application/json',
+    //   'Accept': 'application/json'
+    // }
 
     //event listeners
     showingsContainer.addEventListener("click", event =>{
@@ -73,6 +90,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         let showingId = event.target.dataset.id
         console.log(showingId)
         let showingObject = showingFind(showingId)
+        // make post after this
         let showingCard = event.target.parentElement.parentElement
         let showingCardTicketsRemaining = showingCard.children[0].children[3]
         let showingCardTicketsRemainingHTML = showingCard.children[0].children[3].innerHTML
@@ -82,7 +100,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         showingCardTicketsRemaining.innerHTML = `
               ${ticketsRemain} remaining tickets
         `
-        // make post after this
+
       }
 
     })
