@@ -29,7 +29,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
       //helper method to format cards in HTML
       function movieHTMLHelper(movie) {
           return `
-        <div class="card">
+        <div id="${movie.id}" class="card">
             <div class="content">
                 <div class="header">
                     ${movie.film.title}
@@ -53,6 +53,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     //add event listener to movie Container
     showingContainer.addEventListener('click', function(event) {
+        console.log(event.target)
         if (event.target.id === 'buy-ticket') {
             selectedMovieId = event.target.dataset.id
             selectedMovie = findMovieById(event.target.dataset.id)
@@ -60,7 +61,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             
             //decrement remaining tickets by 1
             decrementTicketCount(selectedMovie)
-            
+
             //fetch POST to create a ticket
             fetch('https://evening-plateau-54365.herokuapp.com/tickets', {
               method: 'POST',
@@ -83,8 +84,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
         })
         .catch(error => {
             console.error(error)
-            console.log(test)
-        }); //this needs to trigger if movie.tickets_sold is equal to 0
+            // console.log(event.target.dataset.id)
+        });// invoke a function to update the innerHTML of the card div to replace the button with the sold out text
         }
     })
 
@@ -100,22 +101,19 @@ window.addEventListener('DOMContentLoaded', (event) => {
         });
     }
 
-    //helper method for when movies hit 0
-
-    // var hidden = false;
-    // function action() {
-    //     hidden = !hidden;
-    //     if(hidden) {
-    //         document.getElementById('togglee').style.visibility = 'hidden';
-    //     } else {
-    //         document.getElementById('togglee').style.visibility = 'visible';
-    //     }
-    // }
-
-    ///grab button
-    function hideButton(movie) {
-        
-    }
-
-
 });
+
+//button check - probably won't have time to figure out how to look at every movie to determine if there are no tickets left right now I'm thinking a forEach statement?
+
+//run a forEach method on the movieArray to determine if tickets are sold out. At that time update the HTML and rerender the page. Do this right after the post request.
+
+if (selectedMovie.capacity - selectedMovie.tickets_sold === 0) {
+    hideButton(selectedMovie)
+}
+
+
+function hideButton(movie) {
+    let div = document.querySelector(`${movie.id}`)
+    console.log(div)
+    /// add the code to remove the buy ticket button and replace it with the sold out text
+}
