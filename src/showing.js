@@ -19,7 +19,7 @@ class Showing {
         <div class='description'>${this.capacity - this.tickets_sold} remaining tickets</div>
         <span class='ui label'>${this.showtime}</span>
       </div>
-      <div class='extra-content'>
+      <div class='extra content'>
         ${buttonHtml}
       </div>
     </div>
