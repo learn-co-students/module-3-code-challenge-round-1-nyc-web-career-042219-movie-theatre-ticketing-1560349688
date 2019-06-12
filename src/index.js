@@ -51,8 +51,16 @@ document.addEventListener('DOMContentLoaded', () => {
     if (event.target.className === 'ui blue button') {
       console.log(event.target.parentNode.previousElementSibling[3])
       //got deep in the weeds getting the "remaining tickets" sibling.
+      //decrement ticket count "--remainingTickets"
       }
-  })
+  //     fetch(`${THEATRE_URL}`, {
+  //     method: 'POST',
+  //     headers: {
+  //       "Content-Type": "application/json"
+  //     },
+  //     body: JSON.stringify({
+          // showing_id: <add showing_id here>
+  // })
 
 
 //-------- FETCHES
