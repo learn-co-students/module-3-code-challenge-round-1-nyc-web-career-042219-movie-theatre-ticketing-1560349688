@@ -27,9 +27,10 @@ function createTicket(film){
 		    'Content-Type': 'application/json',
 		    'Accept': 'application/json'
 	  	}
-	}).then(res => res.json())
-.then(response => console.log('Success:', JSON.stringify(response)))
-.catch(error => console.error('Error:', error));
+	})
+		.then(res => res.json())
+		.then(response => console.log('Success:', JSON.stringify(response)))
+		.catch(error => console.error('Error:', error));
 }
 
 
@@ -70,15 +71,13 @@ function buyTicket(e){
 		currentFilm = findOneFilm(e.target.dataset.id)
 		createTicket(currentFilm)
 		decreaseRemainingTickets(currentFilm)
-
-
 	}
 }
 
 function decreaseRemainingTickets(film){
 	let ticketsLeft = document.querySelector(`[data-id='description-${film.id}']`)
 	console.log(ticketsLeft)
-	ticketsLeft.innerText = `${film.capacity - film.tickets_sold - 1} tickets remaining`
+	ticketsLeft.innerText = `${parseInt(ticketsLeft.innerText) - 1} tickets remaining`
 }
 
 function findOneFilm(targetId){
