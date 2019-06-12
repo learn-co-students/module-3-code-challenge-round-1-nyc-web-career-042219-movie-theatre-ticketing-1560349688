@@ -1,21 +1,24 @@
 const theatreId = 633;
 const THEATER_URL = `https://evening-plateau-54365.herokuapp.com/theatres/${theatreId}`;
 const TICKET_URL = 'https://evening-plateau-54365.herokuapp.com/tickets'
+let SHOWINGS_ARR = []
 
 //DOM ELEMS
 const showings = document.querySelector('.showings')
-const buyBtn = document.querySelector('.button')
+// const buyBtn = document.querySelector('.button')
 
 //EVENT LISTENERS
 showings.addEventListener('click', (e) => {
     if (e.target.className === 'ui blue button') {
-        //why can't i set e.target etc to variable?
-        //let remainingTkts = e.target.parentElement.previousElementSibling.children[2].innerText
-        let numTkts = parseInt( e.target.parentElement.previousElementSibling.children[2].innerText)
+        const showingCard = e.target.parentElement.previousElementSibling
+        const clickedBtn = showingCard.nextElementSibling.firstElementChild
+        let numTkts = parseInt(showingCard.children[2].innerText)
         --numTkts
-        // debugger
-        e.target.parentElement.previousElementSibling.children[2].innerText = `${numTkts > 0 ? numTkts : numTkts = 0} remaining tickets`
-        // debugger
+        if(numTkts <= 0) {
+            numTkts = 0;
+            clickedBtn.className = 'ui disabled button'
+        }
+        showingCard.children[2].innerText = `${numTkts} remaining tickets`
         fetch(TICKET_URL, {
             method: 'POST',
             headers: {
@@ -23,20 +26,8 @@ showings.addEventListener('click', (e) => {
                 'Accept': 'application/json'
             },
             body: JSON.stringify({
-                showing_id: e.target.parentElement.previousElementSibling.dataset.id
+                showing_id: showingCard.dataset.id
             })
-        })
-        .then(res => res.json())
-        .then(ticket => {
-            let showingId = ticket.showing_id
-            if(numTkts === 0){
-                console.log('disable this button')
-                //find the show card with matching showing.id === showingId
-                let thisCard = document.findElementByAttribut('data-id', showingId)
-                //change the className of buyBtn to 'ui disabled button'
-                debugger
-                //change inner text to Sold Out
-            }
         })
     }
 })
@@ -44,13 +35,14 @@ showings.addEventListener('click', (e) => {
 //RENDER FUNCTIONS
 function ticketHtml(showing) {
     let purchaseStatus;
+    let btnClass;
     let remaining = showing.capacity - showing.tickets_sold
     if (remaining > 0) {
         purchaseStatus = 'Buy Ticket';
+        btnClass = 'ui blue button';
     } else {
-        // debugger
-        // buyBtn.className = "ui disabled button"
         purchaseStatus = 'Sold Out'
+        btnClass = 'ui disabled button'
     }
     let ticketCard = document.createElement('div');
     ticketCard.className = 'card';
@@ -70,22 +62,19 @@ function ticketHtml(showing) {
             </span>
         </div>
         <div class="extra content">
-            <div class="ui blue button">${purchaseStatus}</div>
+            <div class="${btnClass}">${purchaseStatus}</div>
         </div>
     `
     return ticketCard
 }
-
-// refactor diable button render here
-// function disableButton() {
-// }
 
 //INIT
 function init(){
     fetch(THEATER_URL)
     .then(res => res.json())
     .then(tickets => {
-        tickets.showings.map(showing =>{
+        SHOWINGS_ARR = tickets.showings
+        SHOWINGS_ARR.map(showing =>{
             showings.appendChild(ticketHtml(showing))
         })
     })
