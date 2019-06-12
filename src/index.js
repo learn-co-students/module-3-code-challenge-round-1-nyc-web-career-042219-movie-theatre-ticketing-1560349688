@@ -10,6 +10,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     //local state
     let showingsArray = []
+    //figured out the showings tickets sold, broke my dom subtract at the last minute
     let tickets = 20
 
     //functions
@@ -40,7 +41,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                   ${showing.showtime}
                 </span>
                 <div class="description">
-                  ${showing.capacity} remaining tickets
+                  ${showing.tickets_sold} remaining tickets
                 </div>
               </div>
               <div class="extra content">
@@ -98,17 +99,17 @@ window.addEventListener('DOMContentLoaded', (event) => {
         console.log(showingCardTicketsRemainingHTML)
         let ticketsRemain = `${--tickets}`
         tickets = ticketsRemain
-        if (tickets < 1) {
-          showingCardTicketsRemaining.innerHTML = `
-                Sold Out
-          `
-        } else {
-          showingCardTicketsRemaining.innerHTML = `
-                ${ticketsRemain} remaining tickets
-          `
-          console.log(showingCardTicketsRemainingHTML)
+          if (tickets < 1) {
+            showingCardTicketsRemaining.innerHTML = `
+                  Sold Out
+            `
+          } else {
+            showingCardTicketsRemaining.innerHTML = `
+                  ${ticketsRemain} remaining tickets
+            `
+            console.log(showingCardTicketsRemainingHTML)
+          }
         }
-      }
 
     })
 
