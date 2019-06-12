@@ -8,9 +8,7 @@ function fetchShows(movieContainer) {
     fetch(MOVIE_URL)
     .then(resp => resp.json())
     .then(function(theatre) {
-        let movieHTML = theatre.showings.map(movie => createNewMovie(movie))
-        
-        movieContainer.innerHTML = movieHTML;
+        movieContainer.innerHTML = theatre.showings.map(movie => createNewMovie(movie))
     });
 }
 
@@ -35,8 +33,7 @@ function checkSoldOut(movie) {
 }
 
 movieContainer.addEventListener('click', function(e) {
-    if (e.target.className === 'ui blue button')
-        buyTicket(e);
+    if (e.target.className === 'ui blue button') buyTicket(e);
 })
 
 function buyTicket(e) {
@@ -52,11 +49,12 @@ function buyTicket(e) {
         },
         body: JSON.stringify({ showing_id })
     })
-    
-    tixsLeft--;
-    tixsDescription.innerHTML = `${tixsLeft} remaining tickets`;
-    if(tixsLeft === 0)
-        e.target.parentElement.innerHTML = 'Sold Out';
+    .then(resp => resp.json())
+    .then(newTicket => {
+        tixsLeft--;
+        tixsDescription.innerHTML = `${tixsLeft} remaining tickets`;
+        if (tixsLeft === 0) e.target.parentElement.innerHTML = 'Sold Out';
+    })
 }
 
 fetchShows(movieContainer);
