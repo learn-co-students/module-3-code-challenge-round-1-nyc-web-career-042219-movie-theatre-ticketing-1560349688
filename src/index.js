@@ -1,3 +1,4 @@
+//DECLARATIONS AND ASSIGNMENTS
 const theatreId = 631;
 const theatreURL = `https://evening-plateau-54365.herokuapp.com/theatres/${theatreId}`
 const ticketURL = "https://evening-plateau-54365.herokuapp.com/tickets"
@@ -7,7 +8,6 @@ let filmsArray = []
 
 init()
 
-
 //FETCHES
 function init(){
 	fetch(theatreURL)
@@ -15,14 +15,13 @@ function init(){
 		.then(filmsData => {
 			displayFilms(filmsData.showings)
 			localStorageFilms(filmsData.showings)
-			console.log(filmsArray)
 	})
 }
 
 function createTicket(film){
 	fetch(ticketURL, {
 		method: 'POST',
-		body: JSON.stringify({showing_id: film.id}), // data can be `string` or {object}!
+		body: JSON.stringify({showing_id: film.id}),
 		headers:{
 		    'Content-Type': 'application/json',
 		    'Accept': 'application/json'
@@ -76,7 +75,6 @@ function buyTicket(e){
 
 function decreaseRemainingTickets(film){
 	let ticketsLeft = document.querySelector(`[data-id='description-${film.id}']`)
-	console.log(ticketsLeft)
 	ticketsLeft.innerText = `${parseInt(ticketsLeft.innerText) - 1} tickets remaining`
 }
 
