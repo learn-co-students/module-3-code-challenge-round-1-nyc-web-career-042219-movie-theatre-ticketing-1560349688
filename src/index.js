@@ -8,8 +8,8 @@ const showings = document.querySelector('.showings')
 showings.addEventListener('click', (e) => {
     if (e.target.className === 'ui blue button') {
         let remaining = parseInt( e.target.parentElement.previousElementSibling.children[2].innerText)
-        debugger
-        ++remaining
+        --remaining
+        e.target.parentElement.previousElementSibling.children[2].innerText = `${remaining} remaining tickets`
         
         fetch(BASE_URL, {
             method: 'PATCH',
