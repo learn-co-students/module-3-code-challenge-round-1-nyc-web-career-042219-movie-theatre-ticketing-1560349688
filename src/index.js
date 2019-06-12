@@ -4,12 +4,13 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     const theatreId = 630;
     const theaterURL = 'https://evening-plateau-54365.herokuapp.com/theatres/630'
+    const ticketURL = 'https://evening-plateau-54365.herokuapp.com/tickets'
 
     let showingsContainer = document.querySelector('#card-showings')
 
     //local state
     let showingsArray = []
-    let userId = null
+    let tickets = 20
 
     //functions
 
@@ -65,7 +66,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     fetchShowings()
     // post
     function postTicket(showingId){
-      return fetch(theaterURL, { method: 'POST',
+      return fetch(ticketURL, { method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
@@ -73,7 +74,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
         body: JSON.stringify({showing_id: showingId})
       })
       .then(res => res.json())
-      //determing what to do with res here 
+      //res is a ticket object, display it
+      //if sold out, .catch, error etc.
     }
     //Required Headers
     // {
@@ -88,19 +90,25 @@ window.addEventListener('DOMContentLoaded', (event) => {
         // post ticket buy event
         // manipulate dom to subtract one ticket
         let showingId = event.target.dataset.id
-        console.log(showingId)
         let showingObject = showingFind(showingId)
-        // make post after this
+        postTicket(showingId)
         let showingCard = event.target.parentElement.parentElement
         let showingCardTicketsRemaining = showingCard.children[0].children[3]
         let showingCardTicketsRemainingHTML = showingCard.children[0].children[3].innerHTML
         console.log(showingCardTicketsRemainingHTML)
-        let tickets = `${showingObject.capacity}`
         let ticketsRemain = `${--tickets}`
-        showingCardTicketsRemaining.innerHTML = `
-              ${ticketsRemain} remaining tickets
-        `
-
+        tickets = ticketsRemain
+        if (tickets == 0) {
+          //also account for negative nums
+          showingCardTicketsRemaining.innerHTML = `
+                Sold Out
+          `
+        } else {
+          showingCardTicketsRemaining.innerHTML = `
+                ${ticketsRemain} remaining tickets
+          `
+          console.log(showingCardTicketsRemainingHTML)
+        }
       }
 
     })
