@@ -3,7 +3,6 @@ const TICKET_URL = 'https://evening-plateau-54365.herokuapp.com/tickets/'
 const theatreId = 638;
 
 const movieContainer = document.getElementsByClassName('ui cards showings')[0]
-let movieArray = [];
 
 function fetchShows(movieContainer) {
     fetch(MOVIE_URL)
@@ -16,7 +15,6 @@ function fetchShows(movieContainer) {
 }
 
 function createNewMovie(movie) {
-    movieArray.push(movie);
     return `
     <div class='card'>
         <div class="content">
@@ -27,18 +25,13 @@ function createNewMovie(movie) {
         </div>
         <div class="extra content">
             ${checkSoldOut(movie)}
-            <div class="ui blue button" id=${movie.id}></div>
         </div>
     </div>
     `
 }
 
 function checkSoldOut(movie) {
-    return ((movie.capacity - movie.tickets_sold) <= 0) ? 'Sold Out' : '<div class="ui blue button" id=${movie.id}>Buy Ticket</div>';
-}
-
-function findMovie(id) {
-    return movieArray.find(movie => movie.id === +id)
+    return ((movie.capacity - movie.tickets_sold) <= 0) ? 'Sold Out' : `<div class="ui blue button" id=${movie.id}>Buy Ticket</div>`;
 }
 
 movieContainer.addEventListener('click', function(e) {
@@ -52,23 +45,20 @@ function buyTicket(e) {
     let tixsDescription = e.target.offsetParent.getElementsByClassName('description')[0]
     let tixsLeft = +tixsDescription.innerText.split(' ')[0]
 
+    fetch(TICKET_URL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({ showing_id })
+    })
+    
     tixsLeft--;
-    if(tixsLeft <= 0) {
-        e.target.innerText = 'Sold Out';
-        e.target.className = 'sold-out'
-        debugger
-    } else {
-        fetch(TICKET_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({ showing_id })
-        })
-        .then(resp => resp.json())
-        
-        tixsDescription.innerHTML = `${tixsLeft} remaining tickets`;
+    tixsDescription.innerHTML = `${tixsLeft} remaining tickets`;
+
+    if(tixsLeft === 0) {
+        e.target.parentElement.innerHTML = 'Sold Out';
     }
 }
 
