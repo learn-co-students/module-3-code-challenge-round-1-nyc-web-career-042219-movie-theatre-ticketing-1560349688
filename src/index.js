@@ -1,8 +1,8 @@
-const MOVIE_URL = 'https://evening-plateau-54365.herokuapp.com/theatres/638';
-const TICKET_URL = 'https://evening-plateau-54365.herokuapp.com/tickets/'
 const theatreId = 638;
+const MOVIE_URL = `https://evening-plateau-54365.herokuapp.com/theatres/${theatreId}`;
+const TICKET_URL = 'https://evening-plateau-54365.herokuapp.com/tickets/';
 
-const movieContainer = document.getElementsByClassName('ui cards showings')[0]
+const movieContainer = document.getElementsByClassName('ui cards showings')[0];
 
 function fetchShows(movieContainer) {
     fetch(MOVIE_URL)
@@ -11,7 +11,7 @@ function fetchShows(movieContainer) {
         let movieHTML = theatre.showings.map(movie => createNewMovie(movie))
         
         movieContainer.innerHTML = movieHTML;
-    })  
+    });
 }
 
 function createNewMovie(movie) {
@@ -53,7 +53,7 @@ function buyTicket(e) {
         },
         body: JSON.stringify({ showing_id })
     })
-    
+
     tixsLeft--;
     tixsDescription.innerHTML = `${tixsLeft} remaining tickets`;
 
