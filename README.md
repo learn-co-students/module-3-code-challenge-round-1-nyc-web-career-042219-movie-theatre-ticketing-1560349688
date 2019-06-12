@@ -20,9 +20,9 @@ The backend for this challenge can be found at `https://evening-plateau-54365.he
 
 There are two endpoints you will use, one to fetch all of the data associated with your assigned theatre and the other to create tickets in the database.
 
-When you visit `https://evening-plateau-54365.herokuapp.com/` in your browser, you'll be assigned a **unique id**
+<!-- When you visit `https://evening-plateau-54365.herokuapp.com/` in your browser, you'll be assigned a **unique id**
 
-**Before you do anything else, change the variable `theatreId` in your index.js file to your assigned id.**
+**Before you do anything else, change the variable `theatreId` in your index.js file to your assigned id.** -->
 
 #### GET `/theatres/:id`
 
