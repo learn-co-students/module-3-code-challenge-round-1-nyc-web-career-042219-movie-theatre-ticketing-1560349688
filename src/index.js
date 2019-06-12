@@ -26,15 +26,21 @@ function createNewMovie(movie) {
             <span class="ui label"> ${movie.showtime} </span>
         </div>
         <div class="extra content">
-            <div class="ui blue button" id=${movie.id}>Buy Ticket</div>
+            ${checkSoldOut(movie)}
+            <div class="ui blue button" id=${movie.id}></div>
         </div>
     </div>
     `
 }
 
+function checkSoldOut(movie) {
+    return ((movie.capacity - movie.tickets_sold) <= 0) ? 'Sold Out' : '<div class="ui blue button" id=${movie.id}>Buy Ticket</div>';
+}
+
 function findMovie(id) {
     return movieArray.find(movie => movie.id === +id)
 }
+
 movieContainer.addEventListener('click', function(e) {
     if (e.target.className === 'ui blue button') {
         buyTicket(e);
@@ -42,17 +48,28 @@ movieContainer.addEventListener('click', function(e) {
 })
 
 function buyTicket(e) {
-    let movie = findMovie(e.target.id);
+    let showing_id = +e.target.id;
+    let tixsDescription = e.target.offsetParent.getElementsByClassName('description')[0]
+    let tixsLeft = +tixsDescription.innerText.split(' ')[0]
 
-    fetch(TICKET_URL {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        }
-    })
-    debugger
-
+    tixsLeft--;
+    if(tixsLeft <= 0) {
+        e.target.innerText = 'Sold Out';
+        e.target.className = 'sold-out'
+        debugger
+    } else {
+        fetch(TICKET_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({ showing_id })
+        })
+        .then(resp => resp.json())
+        
+        tixsDescription.innerHTML = `${tixsLeft} remaining tickets`;
+    }
 }
 
 fetchShows(movieContainer);
