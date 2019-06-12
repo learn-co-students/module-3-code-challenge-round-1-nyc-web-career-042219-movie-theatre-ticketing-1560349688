@@ -35,9 +35,8 @@ function checkSoldOut(movie) {
 }
 
 movieContainer.addEventListener('click', function(e) {
-    if (e.target.className === 'ui blue button') {
+    if (e.target.className === 'ui blue button')
         buyTicket(e);
-    }
 })
 
 function buyTicket(e) {
@@ -56,10 +55,8 @@ function buyTicket(e) {
 
     tixsLeft--;
     tixsDescription.innerHTML = `${tixsLeft} remaining tickets`;
-
-    if(tixsLeft === 0) {
+    if(tixsLeft === 0)
         e.target.parentElement.innerHTML = 'Sold Out';
-    }
 }
 
 fetchShows(movieContainer);
