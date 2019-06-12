@@ -79,6 +79,7 @@ function decreaseRemainingTickets(film){
 		createTicket(currentFilm)
 	} else {
 		ticketsLeft.innerText = "sold out"
+
 	}
 }
 
