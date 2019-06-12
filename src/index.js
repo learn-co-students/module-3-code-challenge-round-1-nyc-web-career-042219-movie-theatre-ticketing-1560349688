@@ -87,7 +87,16 @@ function postTicket(e){
           let foundMove = movArr.find(move => {return move.id === showing_id})
           ++movArr[movArr.indexOf(foundMove)].tickets_sold
           renderAllMovies(movArr)
+          // debugger
 
+          /// the debugger is broken and causes my devtools to crash see  https://i.imgur.com/1WNzXQL.png
+          // I was trying to get to the parent element of e<event> and then to the button and if the number of tickets was ===0 then change display block to none
+          // alas i could not
+          // to work around this i just made the button display "sold out", I didnt have the time to guess around
+          console.log(e)
+          // if (e.target.){
+          //   debugger
+          // }
           })
 
     }
