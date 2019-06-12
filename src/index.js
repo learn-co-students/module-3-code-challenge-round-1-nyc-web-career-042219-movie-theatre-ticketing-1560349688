@@ -47,18 +47,35 @@ function displayFilms(films){
 			      ${film.film.runtime} minutes
 			    </div>
 			    <div class="description" data-id="description-${film.id}">
-			      ${film.capacity - film.tickets_sold} tickets remaining
+			      ${soldOutTickets(film)}
 			    </div>
 			    <span class="ui label">
 			      ${film.showtime}
 			    </span>
 			  </div>
 			  <div class="extra content">
-			    <div class="ui blue button" data-id=${film.id}>Buy Ticket</div>
+			  	${soldOutDiv(film)}
 			  </div>
 			</div>
 		`
 	})
+}
+
+function soldOutTickets(film){
+	if(film.capacity - film.tickets_sold > 0){
+		return `${film.capacity - film.tickets_sold} tickets remaining`
+	} else if (film.capacity - film.tickets_sold === 0){
+		// console.log(document.querySelector(`[data-id='${film.id}']`))
+		return "Sold Out"
+	}
+}
+
+function soldOutDiv(film){
+    if (film.capacity - film.tickets_sold === 0){
+        return "Sold Out"
+    } else {
+        return `<div class="ui blue button" data-id=${film.id}>Buy Ticket</div>`
+    }
 }
 
 function localStorageFilms(films){
@@ -68,18 +85,19 @@ function localStorageFilms(films){
 function buyTicket(e){
 	if (e.target.className === "ui blue button"){
 		currentFilm = findOneFilm(e.target.dataset.id)
-		decreaseRemainingTickets(currentFilm)
+		decreaseRemainingTickets(currentFilm, e)
 	}
 }
 
-function decreaseRemainingTickets(film){
+function decreaseRemainingTickets(film, event){
 	let ticketsLeft = document.querySelector(`[data-id='description-${film.id}']`)
 	if (parseInt(ticketsLeft.innerText) > 0) {
 		ticketsLeft.innerText = `${parseInt(ticketsLeft.innerText) - 1} tickets remaining`
 		createTicket(currentFilm)
-	} else {
-		ticketsLeft.innerText = "sold out"
-
+	} else if(parseInt(ticketsLeft.innerText) === 0 || ticketsLeft.innerText === "Sold Out") {
+		ticketsLeft.innerText = "Sold Out"
+		event.target.innerText = "Sold Out"
+		event.target.classList.add("disabled")
 	}
 }
 
