@@ -6,7 +6,7 @@
 
 You will be building out an application that allows a user to purchase movie tickets.
 
-* As a user, when the page loads I should see a list of movie showings fetched from a remote API.
+<!-- * As a user, when the page loads I should see a list of movie showings fetched from a remote API. -->
 
 * As a user, clicking on the 'Buy Ticket' button should purchase a ticket and decrement the remaining tickets by one. This information should be persisted in the remote API.
 
