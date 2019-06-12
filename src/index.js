@@ -1,6 +1,7 @@
 window.addEventListener('DOMContentLoaded', (event) => {
     console.log('DOM fully loaded and parsed');
 
+
     const theatreId = 645;
     // 645
 
@@ -57,25 +58,25 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
       let buyButtonPress = event.target.className
       //console.log(buyButtonPress);
-
+      let purchasedTix =
 
       if (buyButtonPress === "ui blue button") {
         let movieId = event.target.id
 
 
 
-            fetch(theaterURL + '/' + movieId, {method: 'PATCH',
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-            },
-            body: JSON.stringify({
-            //  "tickets_sold": ++sold
-            })
-
-          })
-            .then(response => response.json())
-            .then(data => console.log(data))
+          //   fetch(theaterURL + '/' + movieId, {method: 'PATCH',
+          //   headers: {
+          //     'Content-Type': 'application/json',
+          //     'Accept': 'application/json'
+          //   },
+          //   body: JSON.stringify({
+          //   //  "tickets_sold": ++sold
+          //   })
+          //
+          // })
+          //   .then(response => response.json())
+          //   .then(data => console.log(data))
 
           //close bracket for conditional
     }
