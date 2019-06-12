@@ -12,10 +12,20 @@ window.addEventListener('DOMContentLoaded', (event) => {
     let userId = null
 
     //functions
+
+    // find showing
+
+    function showingFind(showingId){
+      let foundShowing = showingsArray.find(showing => showing.id === parseInt(showingId))
+      return foundShowing
+    }
     //display showing
 
     function displayShowingsArray(array){
       showingsContainer.innerHTML = array.map(showing => {
+        // //come back to this
+        // access tickets sold, subtract from capacity
+        // let showingCapacity = `"20 - ${showing.film[tickets_sold]}"`
         return`
           <div class="card">
             <div class="content">
@@ -56,10 +66,23 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     //event listeners
     showingsContainer.addEventListener("click", event =>{
-      console.log(event.target.dataset.tag)
       if (event.target.dataset.tag === 'buy-btn') {
-        console.log('click buy')
+        // find showing
+        // post ticket buy event
+        // manipulate dom to subtract one ticket
         let showingId = event.target.dataset.id
+        console.log(showingId)
+        let showingObject = showingFind(showingId)
+        let showingCard = event.target.parentElement.parentElement
+        let showingCardTicketsRemaining = showingCard.children[0].children[3]
+        let showingCardTicketsRemainingHTML = showingCard.children[0].children[3].innerHTML
+        console.log(showingCardTicketsRemainingHTML)
+        let tickets = `${showingObject.capacity}`
+        let ticketsRemain = `${--tickets}`
+        showingCardTicketsRemaining.innerHTML = `
+              ${ticketsRemain} remaining tickets
+        `
+        // make post after this
       }
 
     })
