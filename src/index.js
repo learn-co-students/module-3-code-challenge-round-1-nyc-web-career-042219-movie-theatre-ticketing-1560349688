@@ -75,7 +75,11 @@ function buyTicket(e){
 
 function decreaseRemainingTickets(film){
 	let ticketsLeft = document.querySelector(`[data-id='description-${film.id}']`)
-	ticketsLeft.innerText = `${parseInt(ticketsLeft.innerText) - 1} tickets remaining`
+	if (parseInt(ticketsLeft.innerText) > 0) {
+		ticketsLeft.innerText = `${parseInt(ticketsLeft.innerText) - 1} tickets remaining`
+	} else {
+		ticketsLeft.innerText = "sold out"
+	}
 }
 
 function findOneFilm(targetId){
