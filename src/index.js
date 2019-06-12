@@ -98,8 +98,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         console.log(showingCardTicketsRemainingHTML)
         let ticketsRemain = `${--tickets}`
         tickets = ticketsRemain
-        if (tickets == 0) {
-          //also account for negative nums
+        if (tickets < 1) {
           showingCardTicketsRemaining.innerHTML = `
                 Sold Out
           `
