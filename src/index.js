@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
        if(e.target.dataset.type === "buy-btn"){
            buyTicket(e.target.dataset.id)
        }
-
    })
    //fetches
    function fetchShowings(){
@@ -18,7 +17,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
        .then(r => r.json())
        .then(data => {
            showingsArr = data.showings
-           
           displayShowings(showingsArr);
        })
    }
@@ -39,12 +37,9 @@ document.addEventListener("DOMContentLoaded", ()=>{
             showingsArr[updateIndex].tickets_sold++;
             return displayShowings(showingsArr)
         }
-
     })}
-   
    //functions
    function displayShowings(showings){
-
        showingContainer.innerHTML = showings.map(showing => {
            if(showing.capacity - showing.tickets_sold > 0) {
                return `
