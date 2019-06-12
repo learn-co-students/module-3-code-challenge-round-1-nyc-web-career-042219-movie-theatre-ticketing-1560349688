@@ -68,7 +68,6 @@ function localStorageFilms(films){
 function buyTicket(e){
 	if (e.target.className === "ui blue button"){
 		currentFilm = findOneFilm(e.target.dataset.id)
-		createTicket(currentFilm)
 		decreaseRemainingTickets(currentFilm)
 	}
 }
@@ -77,6 +76,7 @@ function decreaseRemainingTickets(film){
 	let ticketsLeft = document.querySelector(`[data-id='description-${film.id}']`)
 	if (parseInt(ticketsLeft.innerText) > 0) {
 		ticketsLeft.innerText = `${parseInt(ticketsLeft.innerText) - 1} tickets remaining`
+		createTicket(currentFilm)
 	} else {
 		ticketsLeft.innerText = "sold out"
 	}
