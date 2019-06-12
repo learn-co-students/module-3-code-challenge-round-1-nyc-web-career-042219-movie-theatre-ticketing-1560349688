@@ -1,5 +1,6 @@
 const theatreId = 633;
-const BASE_URL = `https://evening-plateau-54365.herokuapp.com/theatres/${theatreId}`;
+const THEATER_URL = `https://evening-plateau-54365.herokuapp.com/theatres/${theatreId}`;
+const TICKET_URL = 'https://evening-plateau-54365.herokuapp.com/tickets'
 
 //DOM ELEMS
 const showings = document.querySelector('.showings')
@@ -10,18 +11,19 @@ showings.addEventListener('click', (e) => {
         let remaining = parseInt( e.target.parentElement.previousElementSibling.children[2].innerText)
         --remaining
         e.target.parentElement.previousElementSibling.children[2].innerText = `${remaining} remaining tickets`
-        
-        fetch(BASE_URL, {
-            method: 'PATCH',
+        // debugger
+        fetch(TICKET_URL, {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             },
             body: JSON.stringify({
-                showing_id: 'something' //add showing_id here
+                showing_id: e.target.parentElement.previousElementSibling.dataset.id
             })
         })
-        
+        .then(res => res.json())
+        .then(console.log)
     }
 })
 
@@ -37,7 +39,7 @@ function ticketHtml(showing) {
     let ticketCard = document.createElement('div');
     ticketCard.className = 'card';
     ticketCard.innerHTML = `
-        <div class="content">
+        <div class="content" data-id='${showing.id}'>
             <div class="header">
                 ${showing.film.title}
             </div>
@@ -60,7 +62,7 @@ function ticketHtml(showing) {
 
 //INIT
 function init(){
-    fetch(BASE_URL)
+    fetch(THEATER_URL)
     .then(res => res.json())
     .then(tickets => {
         tickets.showings.map(showing =>{
