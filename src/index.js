@@ -52,7 +52,7 @@ function buyTicket(e) {
         },
         body: JSON.stringify({ showing_id })
     })
-
+    
     tixsLeft--;
     tixsDescription.innerHTML = `${tixsLeft} remaining tickets`;
     if(tixsLeft === 0)
